@@ -6,12 +6,12 @@ PATH_PROG=/home/dpalominop/campaign_sms/sms_web
 start() {
     cd $PATH_PROG
     echo $PWD
-    python manage.py runserver 8080
+    nohup python manage.py runserver 8080 &
     echo "Servidor web conectado"
 
     cd $PATH_PROG/demonio
     echo $PWD
-    python conexion_db.py &
+    nohup python conexion_db.py &
     echo "Servidor de campanias conectado"
 }
 
@@ -24,7 +24,7 @@ stop() {
     sleep 2
 
     echo "Finalizando conexion con base de datos ..."
-    pid=`ps -ef | grep 'python manage.py runserver 8080' | awk '{ print $2 }'`
+    pid=`ps -ef | grep 'python conexion_db.py' | awk '{ print $2 }'`
     pid=`echo $pid | awk '{$NF = ""; print}'`
     echo $pid
     kill $pid

@@ -6,7 +6,7 @@ PATH_PROG=/home/dpalominop/campaign_sms/sms_web/demonio
 start() {
     cd $PATH_PROG
     echo $PWD
-    python conexion_db.py &
+    nohup python conexion_db.py &
     echo "Servidor de campanias conectado"
 }
 

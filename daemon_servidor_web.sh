@@ -6,7 +6,7 @@ PATH_PROG=/home/dpalominop/campaign_sms/sms_web
 start() {
     cd $PATH_PROG
     echo $PWD
-    python manage.py runserver 8080
+    nohup python manage.py runserver 8080 &
     echo "Servidor web conectado"
 }
 
