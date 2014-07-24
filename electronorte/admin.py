@@ -5,6 +5,7 @@ from django import forms
 from utils.export_csv import *
 from utils.load_messages import *
 from utils.submit_button import *
+#from django.contrib import messages
 #from django.utils.safestring import mark_safe
 
 
@@ -96,6 +97,11 @@ class CampaniaAdmin(admin.ModelAdmin):
 
     #actions = ['make_enabled', 'make_disabled']
     actions = [multi_export_as_csv_action("Exportar como CSV")]
+
+    #def save_model(self, request, obj, form, change):
+        ## add an additional message
+        #messages.info(request, "Extra message here.")
+        #super(CampaniaAdmin, self).save_model(request, obj, form, change)
 
 
 admin.site.register(Campania, CampaniaAdmin)

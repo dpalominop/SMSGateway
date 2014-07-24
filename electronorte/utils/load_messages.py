@@ -1,12 +1,12 @@
 #!/usr/bin/python
-
+# encoding: utf-8
 import csv
 import re
 
 
 #Se verifica que los datos ingresados sean coherentes.
-number = re.compile('[0-9]{9,10}')
-text = re.compile('([ -~]){0,160}')
+number = re.compile(u'[0-9]{9,10}')
+text = re.compile(u'([ -Ñ]){0,160}')
 
 
 def loadMessagesFromCSV(campania):
@@ -22,14 +22,21 @@ def loadMessagesFromCSV(campania):
 
 
 def loadMessagesFromMemory(campania, archivo):
-    csvfile = csv.reader(archivo, delimiter=';')
 
-    for row in csvfile:
-        n = number.match(row[0])
-        t = text.match(row[1])
-        if n and t:
-            campania.mensaje_set.create(destino=n.group(),
-                                        contenido=t.group(),
-                                        activado=True,
-                                        intentos_fallidos=0,
-                                        gateway_id=0)
+    try:
+        dialect = csv.Sniffer().sniff(archivo.read(), delimiters=';,')
+        archivo.seek(0)
+        csvfile = csv.reader(archivo, dialect)
+
+        for row in csvfile:
+            if len(row) == 2:
+                n = number.match(row[0])
+                t = text.match(row[1])
+                if n and t:
+                    campania.mensaje_set.create(destino=n.group(),
+                                                contenido=t.group(),
+                                                activado=True,
+                                                intentos_fallidos=0,
+                                                gateway_id=0)
+    except:
+        pass
