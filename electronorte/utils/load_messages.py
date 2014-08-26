@@ -31,7 +31,10 @@ def loadMessagesFromMemory(campania, archivo):
         for row in csvfile:
             if len(row) == 2:
                 n = number.match(row[0])
-                t = text.match(row[1].decode('iso-8859-15').encode('utf8'))
+                try:
+                    t = text.match(row[1].decode('iso-8859-15').encode('utf8'))
+                except:
+                    t = text.match(row[1])
                 if n and t:
                     campania.mensaje_set.create(destino=n.group(),
                                                 contenido=t.group(),
