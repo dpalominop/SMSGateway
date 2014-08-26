@@ -16,7 +16,7 @@ def Null_if_neg(i):
 
 host = "localhost"
 user = "root"
-passw = "tccperu2013"
+passw = "tccperu"
 db_name = "sms"
 
 db = None

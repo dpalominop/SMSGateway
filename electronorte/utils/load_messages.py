@@ -26,12 +26,12 @@ def loadMessagesFromMemory(campania, archivo):
     try:
         dialect = csv.Sniffer().sniff(archivo.read(), delimiters=';,')
         archivo.seek(0)
-        csvfile = csv.reader(archivo, dialect)
 
+        csvfile = csv.reader(archivo, dialect)
         for row in csvfile:
             if len(row) == 2:
                 n = number.match(row[0])
-                t = text.match(row[1])
+                t = text.match(row[1].decode('iso-8859-15').encode('utf8'))
                 if n and t:
                     campania.mensaje_set.create(destino=n.group(),
                                                 contenido=t.group(),
